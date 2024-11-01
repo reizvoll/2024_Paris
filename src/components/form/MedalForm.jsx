@@ -59,10 +59,13 @@ export const Form = ({ formData, setFormData, medalLists, setMedalList }) => {
             }
         }
 
-        setMedalList((medalLists) => [...medalLists, formData]);
-        const getItem = JSON.parse(localStorage.getItem("medalLists")) || [];
-        getItem.push(formData);
-        localStorage.setItem("medalLists", JSON.stringify(getItem));
+        const unsortedList = [...medalLists, formData];
+
+        unsortedList.sort((a, b) => b.goldMedal - a.goldMedal);
+
+        setMedalList(unsortedList);
+
+        localStorage.setItem("medalLists", JSON.stringify(updatedList));
 
         setFormData({ country: "", goldMedal: "", silverMedal: "", copperMedal: "" });
     };
